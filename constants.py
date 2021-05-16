@@ -1,0 +1,3 @@
+HEIGHT = 8
+WIDTH = 8
+BOMBS = 5
