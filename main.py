@@ -1,3 +1,3 @@
-import init
+from src import init
 
 init.initialize()

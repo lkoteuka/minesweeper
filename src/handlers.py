@@ -9,5 +9,4 @@ def none():
 def number(num):
     def print_number():
         print("Number ", num)
-
     return print_number

@@ -1,6 +1,6 @@
-import gui
-import constants as const
-import handlers
+import src.gui as gui
+import src.constants as const
+import src.handlers as handlers
 import random
 
 
@@ -26,7 +26,8 @@ def generate_field(size_x, size_y, bomb_number):
     return field
 
 
-def initialize(size_x=const.HEIGHT, size_y=const.WIDTH, bomb_number=const.BOMBS):
-    field = gui.FieldFrame(gui.root, width=size_y, height=size_x)
+def initialize(size_x=const.HEIGHT, size_y=const.WIDTH,
+               bomb_number=const.BOMBS):
+    field = gui.FieldFrame(gui.root, cols=size_y, rows=size_x)
     field.set_buttons(generate_field(size_x, size_y, bomb_number))
     gui.root.mainloop()
