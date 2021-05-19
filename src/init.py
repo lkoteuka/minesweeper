@@ -28,6 +28,7 @@ def generate_field(size_x, size_y, bomb_number):
 
 def initialize(size_x=const.HEIGHT, size_y=const.WIDTH,
                bomb_number=const.BOMBS):
+    top = gui.TopFrame(gui.root, cols=size_y)
     field = gui.FieldFrame(gui.root, cols=size_y, rows=size_x)
     field.set_buttons(generate_field(size_x, size_y, bomb_number))
     gui.root.mainloop()
