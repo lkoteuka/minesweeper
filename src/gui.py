@@ -9,32 +9,43 @@ class FieldFrame(tk.Frame):
                                          height=const.BTN_SIZE_RATIO * rows)
         self.grid(row=1, column=0, sticky=tk.NSEW)
         self.grid_propagate(False)
+        self.buttons = []
+        self.button_states = [0 for x in range(cols * rows)]
         self.cols = cols
         self.rows = rows
 
     def set_buttons(self, values):
-        self.buttons = []
         self.values = values
         for j in range(self.rows):
             for i in range(self.cols):
-                def button_func(col, row, **kwargs):
-                    def result(**kwargs):
-                        self.button_pressed(col, row, **kwargs)
+                def left_click(col, row):
+                    def result(event):
+                        self.left_click_func(col, row)
 
                     return result
 
-                btnframe = tk.Frame(self,
-                                    width=const.BTN_SIZE_RATIO,
+                def right_click(col, row):
+                    def result(event):
+                        self.right_click_func(col, row)
+
+                    return result
+
+                btnframe = tk.Frame(self, width=const.BTN_SIZE_RATIO,
                                     height=const.BTN_SIZE_RATIO)
                 btnframe.grid_propagate(False)
                 btnframe.propagate(False)
                 btnframe.grid(row=j, column=i, sticky=tk.NSEW)
-                btn = tk.Button(btnframe, command=button_func(i, j))
+                btn = tk.Button(btnframe)
+                btn.bind("<Button-1>", left_click(i, j))
+                btn.bind("<Button-3>", right_click(i, j))
                 btn.pack(expand=True, fill=tk.BOTH)
                 self.buttons.append(btn)
 
-    def button_pressed(self, col, row, **kwargs):
+    def left_click_func(self, col, row):
         self.open_button(col, row)
+
+    def right_click_func(self, col, row):
+        self.mark_button(col, row)
 
     def open_button(self, col, row):
         index = row * self.cols + col
@@ -46,11 +57,29 @@ class FieldFrame(tk.Frame):
         if value > 0:
             button.config(text=value)
         elif value < 0:
-            button.config(text=u"\u2620")
+            button.config(text=u"\u2739")
+            for i in range(self.cols):
+                for j in range(self.rows):
+                    self.open_button(i, j)
         else:
             for i in range(max(0, col - 1), min(self.cols, col + 2)):
                 for j in range(max(0, row - 1), min(self.rows, row + 2)):
                     self.open_button(i, j)
+
+    def mark_button(self, col, row):
+        index = row * self.cols + col
+        button = self.buttons[index]
+        state = self.button_states[index]
+        if str(button['state']) == 'disabled' and state == 0:
+            return
+        if state == 0:
+            button.config(state=tk.DISABLED)
+            button.config(text=u"\u2690")
+            self.button_states[index] = 1
+        else:
+            button.config(state=tk.NORMAL)
+            button.config(text="")
+            self.button_states[index] = 0
 
 
 class TopFrame(tk.Frame, object):
