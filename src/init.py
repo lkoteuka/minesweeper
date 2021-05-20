@@ -1,6 +1,5 @@
 import src.gui as gui
 import src.constants as const
-import src.handlers as handlers
 import random
 
 
@@ -16,19 +15,12 @@ def generate_field(size_x, size_y, bomb_number):
                 field[index] = field[index] + 1
     for i in range(bomb_number):
         field[bomb_indexes[i]] = -1
-    for i in range(size_x * size_y):
-        if field[i] == -1:
-            field[i] = handlers.bomb
-        elif field[i] == 0:
-            field[i] = handlers.none
-        else:
-            field[i] = handlers.number(field[i])
     return field
 
 
 def initialize(size_x=const.HEIGHT, size_y=const.WIDTH,
                bomb_number=const.BOMBS):
-    top = gui.TopFrame(gui.root, cols=size_y)
+    gui.TopFrame(gui.root, cols=size_y)
     field = gui.FieldFrame(gui.root, cols=size_y, rows=size_x)
     field.set_buttons(generate_field(size_x, size_y, bomb_number))
     gui.root.mainloop()
