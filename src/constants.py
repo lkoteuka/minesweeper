@@ -1,6 +1,13 @@
-HEIGHT = 8
-WIDTH = 8
-BOMBS = 5
+import gettext
+import sys
+import os
+
+datapath = os.path.dirname(sys.argv[0])
+gettext.install('minesweeper', datapath, names=("ngettext",))
+
+HEIGHT = 10
+WIDTH = 10
+BOMBS = 10
 BTN_SIZE_RATIO = 32
 
 COLORS = {
@@ -15,8 +22,8 @@ COLORS = {
 }
 
 TEXTS = {
-    'settings.mines': 'mines',
-    'settings.width': 'height',
-    'settings.height': 'broad',
-    'settings.caption': 'settings',
+    'settings.mines': _("Number of mines"),
+    'settings.width': _("Width"),
+    'settings.height': _("Height"),
+    'settings.caption': _("Options"),
 }
