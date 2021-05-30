@@ -2,19 +2,25 @@ import src.constants as const
 from src.handlers import Timer
 import tkinter as tk
 import random
+import gettext
+import sys
+import os
+
+datapath = os.path.dirname(sys.argv[0])
+gettext.install('minesweeper', datapath, names=("ngettext",))
 
 
 class Cell():
-    TEXT_BOMB = u"\u2738"
-    TEXT_MARK = u"\u2690"
-    TEXT_NONE = ""
-    BACKGROUND_COLOR_NORMAL = "#DDDDDD"
-    BACKGROUND_COLOR_DISABLED = "#BBBBBB"
+    TEXT_BOMB = u'\u2738'
+    TEXT_MARK = u'\u2690'
+    TEXT_NONE = ''
+    BACKGROUND_COLOR_NORMAL = '#DDDDDD'
+    BACKGROUND_COLOR_DISABLED = '#BBBBBB'
 
     def __init__(self, button, value, loss_func, count_func, empty_cell_func):
-        button["background"] = self.BACKGROUND_COLOR_NORMAL
-        button.bind("<Button-1>", self.open)
-        button.bind("<Button-3>", self.mark)
+        button['background'] = self.BACKGROUND_COLOR_NORMAL
+        button.bind('<Button-1>', self.open)
+        button.bind('<Button-3>', self.mark)
         button.pack(expand=True, fill=tk.BOTH)
         self.button = button
         self.loss_func = loss_func
@@ -26,8 +32,8 @@ class Cell():
         if self.is_disabled:
             return
         self.is_disabled = True
-        self.button["background"] = self.BACKGROUND_COLOR_DISABLED
-        self.button.config(state=tk.DISABLED, disabledforeground="#0000FF")
+        self.button['background'] = self.BACKGROUND_COLOR_DISABLED
+        self.button.config(state=tk.DISABLED, disabledforeground='#0000FF')
         if self.is_bomb:
             self.button.config(text=self.__class__.TEXT_BOMB,
                                disabledforeground='black')
@@ -52,7 +58,7 @@ class Cell():
         else:
             self.is_disabled = True
             self.is_marked = True
-            self.button.config(state=tk.DISABLED, disabledforeground="#FF0000")
+            self.button.config(state=tk.DISABLED, disabledforeground='#FF0000')
             self.button.config(text=self.__class__.TEXT_MARK)
             flag_counter.set(flag_counter.get() - 1)
 
@@ -62,13 +68,13 @@ class Cell():
         self.is_empty = (value == 0)
         self.is_marked = False
         self.is_disabled = False
-        self.button.config(state=tk.NORMAL, text="")
-        self.button["background"] = self.BACKGROUND_COLOR_NORMAL
+        self.button.config(state=tk.NORMAL, text='')
+        self.button['background'] = self.BACKGROUND_COLOR_NORMAL
 
 
 class FieldFrame(tk.Frame, object):
-    TEXT_WIN = u"\u263a" + 'YOU WIN!'
-    TEXT_LOSE = u"\u2639" + 'YOU LOSE!'
+    TEXT_WIN = u'\u263a' + _("YOU WIN!")
+    TEXT_LOSE = u'\u2639' + _("YOU LOSE!")
 
     def __init__(self, root, cols=const.WIDTH, rows=const.HEIGHT,
                  bomb_number=const.BOMBS):
@@ -97,7 +103,7 @@ class FieldFrame(tk.Frame, object):
                     index = j * self.cols + i
                     self.cells[index].open()
             timer.stop_clock()
-            label_flag_counter["foreground"] = "red"
+            label_flag_counter['foreground'] = 'red'
             flag_counter_text.set(self.TEXT_LOSE)
             return
 
@@ -111,7 +117,7 @@ class FieldFrame(tk.Frame, object):
                         self.cells[index].mark()
                         self.cells[index].is_marked = False
                 timer.stop_clock()
-                label_flag_counter["foreground"] = "green"
+                label_flag_counter['foreground'] = 'green'
                 flag_counter_text.set(self.TEXT_WIN)
 
         def empty_cell_func(col, row):
@@ -155,7 +161,7 @@ class FieldFrame(tk.Frame, object):
         self.generate_field()
         timer.reset_clock()
         flag_counter.set(self.bomb_number)
-        label_flag_counter["foreground"] = "black"
+        label_flag_counter['foreground'] = 'black'
         for i in range(self.cols):
             for j in range(self.rows):
                 index = j * self.cols + i
@@ -168,7 +174,7 @@ class TopFrame(tk.Frame, object):
         self.grid(row=0, column=0)
         timer_label = tk.Label(self, textvariable=timer_text)
         timer_label.grid(row=0, column=0, sticky=tk.W)
-        self.restart_button = tk.Button(self, text="Restart game",
+        self.restart_button = tk.Button(self, text=_("Restart game"),
                                         command=field_restart)
         self.restart_button.grid(row=0, column=1)
         global label_flag_counter
@@ -225,20 +231,20 @@ def show_settings_window(*_):
 
 
 root = tk.Tk()
-root.title('Minesweeper')
+root.title(_("Minesweeper"))
 root.resizable(False, False)
-root.bind("<o>", show_settings_window)
-root.bind("<O>", show_settings_window)
+root.bind('<o>', show_settings_window)
+root.bind('<O>', show_settings_window)
 
 
 def counter_text(*args):
-    flag_counter_text.set("Bombs: {}".format(flag_counter.get()))
+    flag_counter_text.set('{}: {}'.format(_("Bombs"), flag_counter.get()))
 
 
 flag_counter = tk.IntVar()
-flag_counter.trace("w", counter_text)
+flag_counter.trace('w', counter_text)
 flag_counter_text = tk.StringVar(root)
-flag_counter_text.set("Bombs: {}".format(flag_counter.get()))
+flag_counter_text.set('{}: {}'.format(_("Bombs"), flag_counter.get()))
 
 timer_text = tk.StringVar(root)
 timer = Timer(timer_text)
