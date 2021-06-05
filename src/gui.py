@@ -10,7 +10,9 @@ datapath = os.path.dirname(sys.argv[0])
 gettext.install('minesweeper', datapath, names=("ngettext",))
 
 
-class Cell():
+class Cell:
+    """ Class representing cell of the field
+    """
     TEXT_BOMB = u'\u2738'
     TEXT_MARK = u'\u2690'
     TEXT_NONE = ''
@@ -18,6 +20,19 @@ class Cell():
     BACKGROUND_COLOR_DISABLED = '#BBBBBB'
 
     def __init__(self, button, value, loss_func, count_func, empty_cell_func):
+        """ Constructor
+
+        :param button: button to interact with cell
+        :type button: tk.Button
+        :param value: indicates whether cell contains bomb or not - if value < 0 then cell contains bomb, if value == 0 it is empty
+        :type value: int
+        :param loss_func: function to call when player looses
+        :type loss_func: function
+        :param count_func: function to count bombs in neighborhood
+        :type count_func: function
+        :param empty_cell_func: function to call when player choose empty cell
+        :type empty_cell_func: function
+        """
         button['background'] = self.BACKGROUND_COLOR_NORMAL
         button.bind('<Button-1>', self.open)
         button.bind('<Button-3>', self.mark)
@@ -27,8 +42,15 @@ class Cell():
         self.count_func = count_func
         self.empty_cell_func = empty_cell_func
         self.reset(value)
+        self.value = value
+        self.is_bomb = (value < 0)
+        self.is_empty = (value == 0)
+        self.is_marked = False
+        self.is_disabled = False
 
     def open(self, event=None):
+        """ Function that checks cell when player chooses it
+        """
         if self.is_disabled:
             return
         self.is_disabled = True
@@ -47,6 +69,8 @@ class Cell():
         self.count_func()
 
     def mark(self, event=None):
+        """ Function that marks cell when player chooses it
+        """
         if self.is_disabled and not self.is_marked:
             return
         if self.is_marked:
@@ -63,6 +87,8 @@ class Cell():
             flag_counter.set(flag_counter.get() - 1)
 
     def reset(self, value):
+        """Function that resets cell state to default
+        """
         self.value = value
         self.is_bomb = (value < 0)
         self.is_empty = (value == 0)
@@ -73,11 +99,24 @@ class Cell():
 
 
 class FieldFrame(tk.Frame, object):
+    """ Class for rendering field
+    """
     TEXT_WIN = u'\u263a' + _("YOU WIN!")
     TEXT_LOSE = u'\u2639' + _("YOU LOSE!")
 
     def __init__(self, root, cols=const.WIDTH, rows=const.HEIGHT,
                  bomb_number=const.BOMBS):
+        """ Constructor
+
+        :param root: TODO
+        :type root: tk.Tk
+        :param cols: number of columns
+        :type cols: int
+        :param rows:  number of rows
+        :type rows: int
+        :param bomb_number: number of bombs
+        :type bomb_number: int
+        """
         super(FieldFrame, self).__init__(root,
                                          width=const.BTN_SIZE_RATIO * cols,
                                          height=const.BTN_SIZE_RATIO * rows)
@@ -94,7 +133,10 @@ class FieldFrame(tk.Frame, object):
         flag_counter.set(self.bomb_number)
 
     def set_buttons(self):
+        """Function creates buttons and then binds them to the cells"""
+
         def loss_func():
+            """Function opens field and stopped timer when player looses"""
             if self.is_loser:
                 return
             self.is_loser = True
@@ -108,6 +150,7 @@ class FieldFrame(tk.Frame, object):
             return
 
         def count_func():
+            """Function counts bombs in neighborhood"""
             self.undefined_cells = self.undefined_cells - 1
             if self.undefined_cells == 0 and not self.is_loser:
                 for i in range(self.cols):
@@ -121,6 +164,7 @@ class FieldFrame(tk.Frame, object):
                 flag_counter_text.set(self.TEXT_WIN)
 
         def empty_cell_func(col, row):
+            """Function opens the empty cell that player chooses"""
             def result():
                 for i in range(max(0, col - 1), min(self.cols, col + 2)):
                     for j in range(max(0, row - 1), min(self.rows, row + 2)):
@@ -141,6 +185,7 @@ class FieldFrame(tk.Frame, object):
                 self.cells.append(cell)
 
     def generate_field(self):
+        """Function generates a distribution of bombs on the field"""
         field = [0 for x in range(self.cols * self.rows)]
         bomb_indexes = random.sample(range(self.cols * self.rows),
                                      self.bomb_number)
@@ -156,6 +201,7 @@ class FieldFrame(tk.Frame, object):
         self.field = field
 
     def restart(self):
+        """Function that restarts the playing field"""
         self.is_loser = False
         self.undefined_cells = self.cols * self.rows - self.bomb_number
         self.generate_field()
@@ -169,7 +215,16 @@ class FieldFrame(tk.Frame, object):
 
 
 class TopFrame(tk.Frame, object):
+    """Class to interact with player"""
     def __init__(self, root, cols=const.WIDTH, field_restart=None):
+        """ Constructor
+
+        :param root: TODO
+        :type root: tk.Frame
+        :param cols: number of columns
+        :type cols: int
+        :param field_restart: TODO
+        """
         super(TopFrame, self).__init__(root, width=const.BTN_SIZE_RATIO * cols)
         self.grid(row=0, column=0)
         timer_label = tk.Label(self, textvariable=timer_text)
@@ -183,6 +238,7 @@ class TopFrame(tk.Frame, object):
 
 
 def show_settings_window(*_):
+    """Function to show settings window"""
     sw = tk.Toplevel(root)
     sw.focus_set()
     sw.grab_set()
@@ -238,6 +294,7 @@ root.bind('<O>', show_settings_window)
 
 
 def counter_text(*args):
+    """TODO"""
     flag_counter_text.set('{}: {}'.format(_("Bombs"), flag_counter.get()))
 
 
