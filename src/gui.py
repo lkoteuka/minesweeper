@@ -1,5 +1,6 @@
 import src.constants as const
 from src.handlers import Timer
+from src.utils import generate_field
 import tkinter as tk
 import random
 import gettext
@@ -128,7 +129,7 @@ class FieldFrame(tk.Frame, object):
         self.bomb_number = bomb_number
         self.is_loser = False
         self.undefined_cells = cols * rows - bomb_number
-        self.generate_field()
+        self.set_field()
         self.set_buttons()
         flag_counter.set(self.bomb_number)
 
@@ -165,6 +166,7 @@ class FieldFrame(tk.Frame, object):
 
         def empty_cell_func(col, row):
             """Function opens the empty cell that player chooses"""
+
             def result():
                 for i in range(max(0, col - 1), min(self.cols, col + 2)):
                     for j in range(max(0, row - 1), min(self.rows, row + 2)):
@@ -184,27 +186,19 @@ class FieldFrame(tk.Frame, object):
                             loss_func, count_func, empty_cell_func(i, j))
                 self.cells.append(cell)
 
-    def generate_field(self):
-        """Function generates a distribution of bombs on the field"""
-        field = [0 for x in range(self.cols * self.rows)]
-        bomb_indexes = random.sample(range(self.cols * self.rows),
-                                     self.bomb_number)
-        for i in range(self.bomb_number):
-            x = bomb_indexes[i] % self.rows
-            y = bomb_indexes[i] // self.rows
-            for j in range(max(0, x - 1), min(x + 2, self.rows)):
-                for k in range(max(0, y - 1), min(y + 2, self.cols)):
-                    index = k * self.rows + j
-                    field[index] = field[index] + 1
-        for i in range(self.bomb_number):
-            field[bomb_indexes[i]] = -1
+    def set_field(self):
+        """
+        Set game field
+        :return: None
+        """
+        field = generate_field(self.rows, self.cols, self.bomb_number, random.random())
         self.field = field
 
     def restart(self):
         """Function that restarts the playing field"""
         self.is_loser = False
         self.undefined_cells = self.cols * self.rows - self.bomb_number
-        self.generate_field()
+        self.set_field()
         timer.reset_clock()
         flag_counter.set(self.bomb_number)
         label_flag_counter['foreground'] = 'black'
@@ -216,6 +210,7 @@ class FieldFrame(tk.Frame, object):
 
 class TopFrame(tk.Frame, object):
     """Class to interact with player"""
+
     def __init__(self, root, cols=const.WIDTH, field_restart=None):
         """ Constructor
 
