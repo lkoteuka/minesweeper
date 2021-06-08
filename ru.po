@@ -16,38 +16,38 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/constants.py:18
+#: src/constants.py:25
 msgid "Number of mines"
 msgstr "Количество мин"
 
-#: src/constants.py:19
+#: src/constants.py:26
 msgid "Width"
 msgstr "Ширина"
 
-#: src/constants.py:20
+#: src/constants.py:27
 msgid "Height"
 msgstr "Высота"
 
-#: src/constants.py:21
+#: src/constants.py:28
 msgid "Options"
 msgstr "Настройки"
 
-#: src/gui.py:75
+#: src/gui.py:104
 msgid "YOU WIN!"
 msgstr "Победа!"
 
-#: src/gui.py:76
+#: src/gui.py:105
 msgid "YOU LOSE!"
 msgstr "Поражение!"
 
-#: src/gui.py:176
+#: src/gui.py:232
 msgid "Restart game"
 msgstr "Перезапуск"
 
-#: src/gui.py:232
+#: src/gui.py:290
 msgid "Minesweeper"
 msgstr "Сапер"
 
-#: src/gui.py:239 src/gui.py:245
+#: src/gui.py:298 src/gui.py:304
 msgid "Bombs"
 msgstr "Бомб"
