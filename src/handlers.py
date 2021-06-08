@@ -4,10 +4,12 @@ from threading import Thread, Event
 
 
 class MyThread(Thread):
-    """ Class for update timer in a separate thread.
+    """
+    Class for update timer in a separate thread.
     """
     def __init__(self, root, seconds_to_wait):
-        """ Constructor
+        """
+        Constructor
 
         :param root: timer
         :type root: Timer
@@ -21,7 +23,8 @@ class MyThread(Thread):
         self.seconds_to_wait = seconds_to_wait
 
     def run(self):
-        """ Updating timer's clock. Override method of class Thread
+        """
+        Updating timer's clock. Override method of class Thread
         """
         while not self.stopped.wait(self.seconds_to_wait):
             self.root.update_clock()
@@ -29,10 +32,12 @@ class MyThread(Thread):
 
 
 class Timer:
-    """ Class for representing timer.
+    """
+    Class for representing timer.
     """
     def __init__(self, text_variable):
-        """ Constructor
+        """
+        Constructor
 
         :param text_variable: holder in GUI where time is shown
         :type text_variable: tk.StringVar
@@ -46,7 +51,8 @@ class Timer:
         self.thread.start()
 
     def update_clock(self):
-        """ Function for updating clock every tick
+        """
+        Function for updating clock every tick
         """
         if self.is_stopped:
             return
@@ -55,12 +61,14 @@ class Timer:
         self.text_variable.set(text)
 
     def stop_clock(self):
-        """ Function for stopping clock
+        """
+        Function for stopping clock
         """
         self.is_stopped = True
 
     def reset_clock(self):
-        """ Function for resetting clock
+        """
+        Function for resetting clock
         """
         self.begin = datetime.datetime.now()
         self.is_stopped = False

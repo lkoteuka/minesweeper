@@ -3,7 +3,8 @@ import src.constants as const
 
 
 def initialize(size_x=const.HEIGHT, size_y=const.WIDTH, bomb_number=const.BOMBS):
-    """ Function initializes GUI, sets field's sizes, places bombs, sets user controls.
+    """
+    Function initializes GUI, sets field's sizes, places bombs, sets user controls.
 
     :param size_x: length of map in cells
     :type size_x: int
