@@ -168,7 +168,9 @@ class FieldFrame(tk.Frame, object):
         """
         Function opens the empty cell that player chooses
         """
-        return open_empty_cell(col, row, self.cols, self.rows, self.cells)
+        def fun_open_empty_constant_cell():
+            return open_empty_cell(col, row, self.cols, self.rows, self.cells)
+        return fun_open_empty_constant_cell
 
     def set_buttons(self):
         """
