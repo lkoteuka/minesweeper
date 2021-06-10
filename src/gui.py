@@ -1,6 +1,7 @@
 import src.constants as const
 from src.handlers import Timer
-from src.utils import open_empty_cell, open_all_field, generate_field, reset_field, open_bombs
+from src.utils import open_empty_cell, open_all_field,\
+    generate_field, reset_field, open_bombs
 import tkinter as tk
 import random
 
@@ -15,13 +16,16 @@ class Cell:
     BACKGROUND_COLOR_NORMAL = '#DDDDDD'
     BACKGROUND_COLOR_DISABLED = '#BBBBBB'
 
-    def __init__(self, button, value, loss_func, count_func, empty_cell_func):
+    def __init__(self, button, value, loss_func,
+                 count_func, empty_cell_func):
         """
         Constructor
 
         :param button: button to interact with cell
         :type button: tk.Button
-        :param value: indicates whether cell contains bomb or not - if value < 0 then cell contains bomb, if value == 0 it is empty
+        :param value: indicates whether cell contains bomb
+        or not - if value < 0 then cell contains bomb,
+        if value == 0 it is empty
         :type value: int
         :param loss_func: function to call when player looses
         :type loss_func: function
@@ -130,7 +134,10 @@ class FieldFrame(tk.Frame, object):
         self.bomb_number = bomb_number
         self.is_loser = False
         self.undefined_cells = cols * rows - bomb_number
-        self.field = generate_field(self.rows, self.cols, self.bomb_number, random.random())
+        self.field = generate_field(self.rows,
+                                    self.cols,
+                                    self.bomb_number,
+                                    random.random())
         self.set_buttons()
         flag_counter.set(self.bomb_number)
 
@@ -172,12 +179,15 @@ class FieldFrame(tk.Frame, object):
         """
         for j in range(self.rows):
             for i in range(self.cols):
-                btnframe = tk.Frame(self, width=const.BTN_SIZE_RATIO, height=const.BTN_SIZE_RATIO)
+                btnframe = tk.Frame(self,
+                                    width=const.BTN_SIZE_RATIO,
+                                    height=const.BTN_SIZE_RATIO)
                 btnframe.grid_propagate(False)
                 btnframe.propagate(False)
                 btnframe.grid(row=j, column=i, sticky=tk.NSEW)
                 cell = Cell(tk.Button(btnframe), self.field[j * self.cols + i],
-                            self.loss_func, self.count_func, self.empty_cell_func(i, j))
+                            self.loss_func, self.count_func,
+                            self.empty_cell_func(i, j))
                 self.cells.append(cell)
 
     def restart(self):
@@ -186,7 +196,10 @@ class FieldFrame(tk.Frame, object):
         """
         self.is_loser = False
         self.undefined_cells = self.cols * self.rows - self.bomb_number
-        self.field = generate_field(self.rows, self.cols, self.bomb_number, random.random())
+        self.field = generate_field(self.rows,
+                                    self.cols,
+                                    self.bomb_number,
+                                    random.random())
         timer.reset_clock()
         flag_counter.set(self.bomb_number)
         label_flag_counter['foreground'] = 'black'
@@ -212,7 +225,8 @@ class TopFrame(tk.Frame, object):
         self.grid(row=0, column=0)
         timer_label = tk.Label(self, textvariable=timer_text)
         timer_label.grid(row=0, column=0, sticky=tk.W)
-        self.restart_button = tk.Button(self, text=const.TEXTS['settings.restart'],
+        self.restart_button = tk.Button(self,
+                                        text=const.TEXTS['settings.restart'],
                                         command=field_restart)
         self.restart_button.grid(row=0, column=1)
         global label_flag_counter
@@ -282,13 +296,15 @@ def counter_text(*args):
     """
     Counter for marked bombs
     """
-    flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'], flag_counter.get()))
+    flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'],
+                                          flag_counter.get()))
 
 
 flag_counter = tk.IntVar()
 flag_counter.trace('w', counter_text)
 flag_counter_text = tk.StringVar(root)
-flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'], flag_counter.get()))
+flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'],
+                                      flag_counter.get()))
 
 timer_text = tk.StringVar(root)
 timer = Timer(timer_text)
