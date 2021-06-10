@@ -1,7 +1,9 @@
 import sys
 import os
 import gettext
-lang = gettext.translation('base', localedir='locales', languages=['ru', 'eng'])
+lang = gettext.translation('base',
+                           localedir='locales',
+                           languages=['ru', 'eng'])
 lang.install()
 _ = lang.gettext  # Russian
 

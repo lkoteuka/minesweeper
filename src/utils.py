@@ -60,7 +60,8 @@ def open_bombs(cols, rows, cells):
 
 def open_empty_cell(col, row, cols, rows, cells):
     """
-    Function opens the empty cell that player chooses and others empty neighboring cells that are empty too
+    Function opens the empty cell that player chooses
+    and others empty neighboring cells that are empty too
 
     :param col: the column number of cell that player chose
     :type col: int

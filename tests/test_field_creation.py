@@ -75,12 +75,17 @@ class Test(TestCase):
         from src.utils import open_all_field
 
         def is_not_opened(cell):
-            return not cell.is_disabled or cell.button['background'] != gui.Cell.BACKGROUND_COLOR_DISABLED
+            return not cell.is_disabled \
+                   or cell.button['background']\
+                   != gui.Cell.BACKGROUND_COLOR_DISABLED
 
         cols = 4
         rows = 4
         bomb_number = 4
-        field_frame = gui.FieldFrame(gui.root, cols=cols, rows=rows, bomb_number=bomb_number)
+        field_frame = gui.FieldFrame(gui.root,
+                                     cols=cols,
+                                     rows=rows,
+                                     bomb_number=bomb_number)
         gui.TopFrame(gui.root, cols=cols)
         open_all_field(field_frame.cols, field_frame.rows, field_frame.cells)
         for i in range(cols * rows):
@@ -99,7 +104,10 @@ class Test(TestCase):
         cols = 6
         rows = 6
         bomb_number = 6
-        field_frame = gui.FieldFrame(gui.root, cols=cols, rows=rows, bomb_number=bomb_number)
+        field_frame = gui.FieldFrame(gui.root,
+                                     cols=cols,
+                                     rows=rows,
+                                     bomb_number=bomb_number)
         gui.TopFrame(gui.root, cols=cols)
         open_bombs(field_frame.cols, field_frame.rows, field_frame.cells)
         for i in range(cols * rows):
@@ -114,7 +122,10 @@ class Test(TestCase):
         rows = 6
         bomb_number = 6
         seed = 1
-        field_frame = gui.FieldFrame(gui.root, cols=cols, rows=rows, bomb_number=bomb_number)
+        field_frame = gui.FieldFrame(gui.root,
+                                     cols=cols,
+                                     rows=rows,
+                                     bomb_number=bomb_number)
         gui.TopFrame(gui.root, cols=cols, field_restart=field_frame.restart)
         field_frame.field = generate_field(rows, cols, bomb_number, seed)
         reset_field(cols, rows, field_frame.cells, field_frame.field)
