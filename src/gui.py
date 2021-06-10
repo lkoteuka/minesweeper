@@ -3,12 +3,6 @@ from src.handlers import Timer
 from src.utils import open_empty_cell, open_all_field, generate_field, reset_field, open_bombs
 import tkinter as tk
 import random
-import gettext
-import sys
-import os
-
-datapath = os.path.dirname(sys.argv[0])
-gettext.install('minesweeper', datapath, names=("ngettext",))
 
 
 class Cell:
@@ -108,8 +102,8 @@ class FieldFrame(tk.Frame, object):
     """
     Class for rendering field
     """
-    TEXT_WIN = u'\u263a' + _("YOU WIN!")
-    TEXT_LOSE = u'\u2639' + _("YOU LOSE!")
+    TEXT_WIN = u'\u263a' + const.TEXTS['settings.win']
+    TEXT_LOSE = u'\u2639' + const.TEXTS['settings.lose']
 
     def __init__(self, root, cols=const.WIDTH, rows=const.HEIGHT,
                  bomb_number=const.BOMBS):
@@ -218,7 +212,7 @@ class TopFrame(tk.Frame, object):
         self.grid(row=0, column=0)
         timer_label = tk.Label(self, textvariable=timer_text)
         timer_label.grid(row=0, column=0, sticky=tk.W)
-        self.restart_button = tk.Button(self, text=_("Restart game"),
+        self.restart_button = tk.Button(self, text=const.TEXTS['settings.restart'],
                                         command=field_restart)
         self.restart_button.grid(row=0, column=1)
         global label_flag_counter
@@ -278,7 +272,7 @@ def show_settings_window(*_):
 
 
 root = tk.Tk()
-root.title(_("Minesweeper"))
+root.title(const.TEXTS['settings.name'])
 root.resizable(False, False)
 root.bind('<o>', show_settings_window)
 root.bind('<O>', show_settings_window)
@@ -288,13 +282,13 @@ def counter_text(*args):
     """
     Counter for marked bombs
     """
-    flag_counter_text.set('{}: {}'.format(_("Bombs"), flag_counter.get()))
+    flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'], flag_counter.get()))
 
 
 flag_counter = tk.IntVar()
 flag_counter.trace('w', counter_text)
 flag_counter_text = tk.StringVar(root)
-flag_counter_text.set('{}: {}'.format(_("Bombs"), flag_counter.get()))
+flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'], flag_counter.get()))
 
 timer_text = tk.StringVar(root)
 timer = Timer(timer_text)
