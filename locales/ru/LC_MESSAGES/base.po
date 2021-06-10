@@ -1,12 +1,12 @@
 # Copyright (C) 2021 ORGANIZATION
-# Kotelnikov Ilya <lkoteukal@gmail.com>, 2021.
+# Timoshkin Michail, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2019-05-23 04:07+MSK\n"
-"PO-Revision-Date: 2019-05-23 04:19+0300\n"
-"Last-Translator: Kotelnikov Ilya <lkoteukal@gmail.com>\n"
+"POT-Creation-Date: 2021-06-10 20:13+0300\n"
+"PO-Revision-Date: 2021-06-10 20:13+0300\n"
+"Last-Translator: Timoshkin Michail \n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,38 +16,39 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/constants.py:25
+
+#: src/constants.py:27
 msgid "Number of mines"
 msgstr "Количество мин"
 
-#: src/constants.py:26
+#: src/constants.py:28
+msgid "Bombs"
+msgstr "Бомб"
+
+#: src/constants.py:29
 msgid "Width"
 msgstr "Ширина"
 
-#: src/constants.py:27
+#: src/constants.py:30
 msgid "Height"
 msgstr "Высота"
 
-#: src/constants.py:28
+#: src/constants.py:31
 msgid "Options"
 msgstr "Настройки"
 
-#: src/gui.py:104
+#: src/constants.py:32
 msgid "YOU WIN!"
-msgstr "Победа!"
+msgstr "Вы выиграли!"
 
-#: src/gui.py:105
+#: src/constants.py:33
 msgid "YOU LOSE!"
-msgstr "Поражение!"
+msgstr "Вы проиграли!"
 
-#: src/gui.py:232
+#: src/constants.py:34
 msgid "Restart game"
-msgstr "Перезапуск"
+msgstr "Перезапустить игру"
 
-#: src/gui.py:290
+#: src/constants.py:35
 msgid "Minesweeper"
-msgstr "Сапер"
-
-#: src/gui.py:298 src/gui.py:304
-msgid "Bombs"
-msgstr "Бомб"
+msgstr "Сапёр"
