@@ -1,9 +1,9 @@
 import sys
 import os
 import gettext
-lang = gettext.translation('base', localedir='locales', languages=['ru', 'eng'])
+lang = gettext.translation('base', localedir='locales', languages=['ru'])
 lang.install()
-_ = lang.gettext  # Russian
+_ = lang.gettext
 
 datapath = os.path.dirname(sys.argv[0])
 
