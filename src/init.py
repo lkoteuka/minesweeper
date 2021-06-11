@@ -1,3 +1,4 @@
+"""Initialization."""
 import src.gui as gui
 import src.constants as const
 
@@ -6,8 +7,7 @@ def initialize(size_x=const.HEIGHT,
                size_y=const.WIDTH,
                bomb_number=const.BOMBS):
     """
-    Function initializes GUI, sets field's sizes,
-    places bombs, sets user controls.
+    Initialize GUI, sets field's sizes, places bombs, sets user controls.
 
     :param bomb_number: number of bobs
     :type bomb_number: int

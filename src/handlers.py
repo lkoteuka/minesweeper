@@ -1,14 +1,14 @@
+"""Handlers."""
 import datetime
 from threading import Thread, Event
 
 
 class MyThread(Thread):
-    """
-    Class for update timer in a separate thread.
-    """
+    """Class for update timer in a separate thread."""
+
     def __init__(self, root, seconds_to_wait):
         """
-        Constructor
+        Construct object.
 
         :param root: timer
         :type root: Timer
@@ -22,21 +22,18 @@ class MyThread(Thread):
         self.seconds_to_wait = seconds_to_wait
 
     def run(self):
-        """
-        Updating timer's clock. Override method of class Thread
-        """
+        """Update timer's clock. Override method of class Thread."""
         while not self.stopped.wait(self.seconds_to_wait):
             self.root.update_clock()
         self.join()
 
 
 class Timer:
-    """
-    Class for representing timer.
-    """
+    """Class for representing timer."""
+
     def __init__(self, text_variable):
         """
-        Constructor
+        Construct object.
 
         :param text_variable: holder in GUI where time is shown
         :type text_variable: tk.StringVar
@@ -50,9 +47,7 @@ class Timer:
         self.thread.start()
 
     def update_clock(self):
-        """
-        Function for updating clock every tick
-        """
+        """Update clock every tick."""
         if self.is_stopped:
             return
         delta = datetime.datetime.now() - self.begin
@@ -60,15 +55,11 @@ class Timer:
         self.text_variable.set(text)
 
     def stop_clock(self):
-        """
-        Function for stopping clock
-        """
+        """Stop clock."""
         self.is_stopped = True
 
     def reset_clock(self):
-        """
-        Function for resetting clock
-        """
+        """Reset clock."""
         self.begin = datetime.datetime.now()
         self.is_stopped = False
         self.update_clock()

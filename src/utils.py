@@ -1,9 +1,10 @@
+"""Utils."""
 import random
 
 
 def generate_field(rows, cols, bomb_number, seed):
     """
-    Function generates game field
+    Generate game field.
 
     :param rows: the number of rows in field
     :type rows: int
@@ -34,7 +35,7 @@ def generate_field(rows, cols, bomb_number, seed):
 
 def open_all_field(cols, rows, cells):
     """
-    Function opens all cells of field
+    Open all cells of field.
 
     :param rows: the number of rows in field
     :type rows: int
@@ -50,6 +51,16 @@ def open_all_field(cols, rows, cells):
 
 
 def open_bombs(cols, rows, cells):
+    """
+    Open bombs.
+
+    :param cols: the number of columns
+    :type cols: int
+    :param rows: the number of rows
+    :type rows: int
+    :param cells: cells of field
+    :type cells: list
+    """
     for i in range(cols):
         for j in range(rows):
             index = j * cols + i
@@ -60,8 +71,7 @@ def open_bombs(cols, rows, cells):
 
 def open_empty_cell(col, row, cols, rows, cells):
     """
-    Function opens the empty cell that player chooses
-    and others empty neighboring cells that are empty too
+    Open the empty cell that player chooses and others empty neighboring cells that are empty too.
 
     :param col: the column number of cell that player chose
     :type col: int
@@ -82,7 +92,7 @@ def open_empty_cell(col, row, cols, rows, cells):
 
 def reset_field(cols, rows, cells, field):
     """
-    Function resets all cells to match new field
+    Reset all cells to match new field.
 
     :param cols: the number of columns
     :type cols: int

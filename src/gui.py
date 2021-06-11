@@ -1,3 +1,4 @@
+"""GUI."""
 import src.constants as const
 from src.handlers import Timer
 from src.utils import open_empty_cell, open_all_field,\
@@ -7,9 +8,8 @@ import random
 
 
 class Cell:
-    """
-    Class representing cell of the field
-    """
+    """Class representing cell of the field."""
+
     TEXT_BOMB = u'\u2738'
     TEXT_MARK = u'\u2690'
     TEXT_NONE = ''
@@ -19,7 +19,7 @@ class Cell:
     def __init__(self, button, value, loss_func,
                  count_func, empty_cell_func):
         """
-        Constructor
+        Construct object.
 
         :param button: button to interact with cell
         :type button: tk.Button
@@ -50,9 +50,7 @@ class Cell:
         self.is_disabled = False
 
     def open(self, event=None):
-        """
-        Function that checks cell when player chooses it
-        """
+        """Check cell when player chooses it."""
         if self.is_disabled:
             return
         self.is_disabled = True
@@ -71,9 +69,7 @@ class Cell:
         self.count_func()
 
     def mark(self, event=None):
-        """
-        Function that marks cell when player chooses it
-        """
+        """Mark cell when player chooses it."""
         if self.is_disabled and not self.is_marked:
             return
         if self.is_marked:
@@ -90,9 +86,7 @@ class Cell:
             flag_counter.set(flag_counter.get() - 1)
 
     def reset(self, value):
-        """
-        Function that resets cell state to default
-        """
+        """Reset cell state to default."""
         self.value = value
         self.is_bomb = (value < 0)
         self.is_empty = (value == 0)
@@ -103,16 +97,15 @@ class Cell:
 
 
 class FieldFrame(tk.Frame, object):
-    """
-    Class for rendering field
-    """
+    """Class for rendering field."""
+
     TEXT_WIN = u'\u263a' + const.TEXTS['settings.win']
     TEXT_LOSE = u'\u2639' + const.TEXTS['settings.lose']
 
     def __init__(self, root, cols=const.WIDTH, rows=const.HEIGHT,
                  bomb_number=const.BOMBS):
         """
-        Constructor
+        Construct object.
 
         :param root: TODO
         :type root: tk.Tk
@@ -142,9 +135,7 @@ class FieldFrame(tk.Frame, object):
         flag_counter.set(self.bomb_number)
 
     def loss_func(self):
-        """
-        Function opens field and stopped timer when player looses
-        """
+        """Open field and stopped timer when player looses."""
         if self.is_loser:
             return
         self.is_loser = True
@@ -155,9 +146,7 @@ class FieldFrame(tk.Frame, object):
         return
 
     def count_func(self):
-        """
-        Function counts left closed cells and when player wins opens bombs
-        """
+        """Count left closed cells and when player wins opens bombs."""
         self.undefined_cells = self.undefined_cells - 1
         if self.undefined_cells == 0 and not self.is_loser:
             open_bombs(self.cols, self.rows, self.cells)
@@ -166,17 +155,13 @@ class FieldFrame(tk.Frame, object):
             flag_counter_text.set(self.TEXT_WIN)
 
     def empty_cell_func(self, col, row):
-        """
-        Function opens the empty cell that player chooses
-        """
+        """Open the empty cell that player chooses."""
         def fun_open_empty_constant_cell():
             return open_empty_cell(col, row, self.cols, self.rows, self.cells)
         return fun_open_empty_constant_cell
 
     def set_buttons(self):
-        """
-        Function creates buttons and then binds them to the cells
-        """
+        """Create buttons and then binds them to the cells."""
         for j in range(self.rows):
             for i in range(self.cols):
                 btnframe = tk.Frame(self,
@@ -191,9 +176,7 @@ class FieldFrame(tk.Frame, object):
                 self.cells.append(cell)
 
     def restart(self):
-        """
-        Function that restarts the playing field
-        """
+        """Restart the playing field."""
         self.is_loser = False
         self.undefined_cells = self.cols * self.rows - self.bomb_number
         self.field = generate_field(self.rows,
@@ -207,13 +190,11 @@ class FieldFrame(tk.Frame, object):
 
 
 class TopFrame(tk.Frame, object):
-    """
-    Class to interact with player
-    """
+    """Class to interact with player."""
 
     def __init__(self, root, cols=const.WIDTH, field_restart=None):
         """
-        Constructor
+        Construct object.
 
         :param root: TODO
         :type root: tk.Frame
@@ -235,9 +216,7 @@ class TopFrame(tk.Frame, object):
 
 
 def show_settings_window(*_):
-    """
-    Function to show settings window
-    """
+    """Show settings window."""
     sw = tk.Toplevel(root)
     sw.focus_set()
     sw.grab_set()
@@ -293,9 +272,7 @@ root.bind('<O>', show_settings_window)
 
 
 def counter_text(*args):
-    """
-    Counter for marked bombs
-    """
+    """Set counter for marked bombs."""
     flag_counter_text.set('{}: {}'.format(const.TEXTS['settings.bombs'],
                                           flag_counter.get()))
 
