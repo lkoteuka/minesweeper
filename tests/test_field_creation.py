@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.utils import generate_field
+from minesweeper.utils import generate_field
 
 
 class Test(TestCase):
@@ -71,8 +71,8 @@ class Test(TestCase):
                 self.fail()
 
     def test_open_all_field(self):
-        from src import gui
-        from src.utils import open_all_field
+        from minesweeper import gui
+        from minesweeper.utils import open_all_field
 
         def is_not_opened(cell):
             return not cell.is_disabled \
@@ -95,8 +95,8 @@ class Test(TestCase):
 
     def test_open_bombs(self):
 
-        from src import gui
-        from src.utils import open_bombs
+        from minesweeper import gui
+        from minesweeper.utils import open_bombs
 
         def is_not_opened(cell):
             return cell.is_bomb and not cell.is_disabled
@@ -116,8 +116,8 @@ class Test(TestCase):
                 self.fail()
 
     def test_reset_bombs(self):
-        from src import gui
-        from src.utils import reset_field
+        from minesweeper import gui
+        from minesweeper.utils import reset_field
         cols = 6
         rows = 6
         bomb_number = 6

@@ -1,5 +1,5 @@
-import src.gui as gui
-import src.constants as const
+import minesweeper.gui as gui
+import minesweeper.constants as const
 
 
 def initialize(size_x=const.HEIGHT,

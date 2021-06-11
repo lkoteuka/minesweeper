@@ -1,9 +1,15 @@
-import src.constants as const
-from src.handlers import Timer
-from src.utils import open_empty_cell, open_all_field,\
+import minesweeper.constants as const
+from minesweeper.handlers import Timer
+from minesweeper.utils import open_empty_cell, open_all_field,\
     generate_field, reset_field, open_bombs
 import tkinter as tk
+import gettext
 import random
+import os
+import sys
+
+datapath = os.path.dirname(sys.argv[0])
+gettext.install('minesweeper', datapath, names=("ngettext",))
 
 
 class Cell:
