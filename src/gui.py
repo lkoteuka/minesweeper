@@ -35,6 +35,7 @@ class Cell:
         :type empty_cell_func: function
         """
         button['background'] = self.BACKGROUND_COLOR_NORMAL
+        button['highlightbackground'] = self.BACKGROUND_COLOR_NORMAL
         button.bind('<Button-1>', self.open)
         button.bind('<Button-3>', self.mark)
         button.pack(expand=True, fill=tk.BOTH)
@@ -55,6 +56,7 @@ class Cell:
             return
         self.is_disabled = True
         self.button['background'] = self.BACKGROUND_COLOR_DISABLED
+        self.button['highlightbackground'] = self.BACKGROUND_COLOR_DISABLED
         self.button.config(state=tk.DISABLED, disabledforeground='#0000FF')
         if self.is_bomb:
             self.button.config(text=self.__class__.TEXT_BOMB,
@@ -94,6 +96,7 @@ class Cell:
         self.is_disabled = False
         self.button.config(state=tk.NORMAL, text='')
         self.button['background'] = self.BACKGROUND_COLOR_NORMAL
+        self.button['highlightbackground'] = self.BACKGROUND_COLOR_NORMAL
 
 
 class FieldFrame(tk.Frame, object):
