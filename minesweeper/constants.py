@@ -2,9 +2,11 @@ import sys
 import os
 import gettext
 
-lang = gettext.translation('base', localedir='locales', languages=['eng'])
-lang.install()
-_ = lang.gettext
+# lang = gettext.translation('base', localedir='locales', languages=['eng'])
+# lang.install()
+# _ = lang.gettext
+datapath = os.path.dirname(sys.argv[0])
+gettext.install('minesweeper', datapath, names=("ngettext",))
 
 datapath = os.path.dirname(sys.argv[0])
 

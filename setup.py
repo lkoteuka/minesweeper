@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="minesweeper_pd_collab_project",
-    version="0.0.2",
+    version="0.0.6",
     author="Kotelnikov Ilya, Timoshkin Michail",
     author_email="llkot3ll@mail.ru",
     description="minesweeper for PythonDevelopment2021 project",
